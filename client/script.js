@@ -1,12 +1,15 @@
-const END_POINT = `http://localhost:3000`
+const END_POINT = `https://thawing-harbor-36087.herokuapp.com`
 
-$('#btn').on('click', () => {
+$('#btn-add').on('click', () => {
     $.ajax({
         method:'GET',
         url: `${END_POINT}/`,
         success: (data) => {
-            $('#name').empty()
             $('#name').append(data.message)
         }
     })
+})
+
+$('#btn-clear').on('click', () => {
+    $('#name').empty()
 })
