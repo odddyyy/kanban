@@ -2,8 +2,8 @@ module.exports = {
   "development": {
     "username": process.env.DB_USER,
     "password": process.env.DB_PASS,
-    "database": "database_development",
-    "host": "127.0.0.1",
+    "database": "kanban_development",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
