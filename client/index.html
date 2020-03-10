@@ -3,27 +3,200 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Document</title>
   </head>
   <body>
-    <ul class="nav bg-light">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">Active</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-    </ul>
 
+    <!-- NAV BAR -->
+    <div id="nav-bar">
+      <ul class="nav bg-light">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Add Task</a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="home">
+      <h1 style="text-align: center;">KanBang</h1>
+      <div class="row" style="height: 100vh;  border: 1px solid black;">
+
+        <!-- BACKLOG COLUMN -->
+        <div class="col-4" style="border: 1px solid #beb5b5;">
+          <h1 style="text-align: center;">BACKLOG</h1>
+          <div class="col-12" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ON PROCESS COLUMN -->
+        <div class="col-4" style="border: 1px solid #beb5b5;">
+          <h1 style="text-align: center;">ON PROCESS</h1>
+          <div class="col-12" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+              <button class="mx-1">--></button>
+            </div>
+          </div>
+          
+        </div>
+
+        <!-- DONE COLUMN -->
+        <div class="col-4" style="border: 1px solid #beb5b5;">
+          <h1 style="text-align: center;">DONE</h1>
+          <div class="col-12" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+            </div>
+          </div>
+          <div class="col-12 mt-2" style="border: 1px solid black;">
+            <h3 style="text-align: center;">Title 1</h3>
+            <h3 style="text-align: center;">Description 1</h3>
+            <div class="d-flex p-2 justify-content-center">
+              <button class="mx-1"><--</button>
+              <button class="mx-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+              <button class="mx-1">Delete</button>
+            </div>
+          </div>
+      </div>
+
+
+      <!-- MODAL EDIT -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              title
+            </div>
+            <div class="modal-body">
+              description
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    </div>
+
+    
+    <div class="login-form container bg-light" style="max-width: 350px; margin-top: 10%;">
+      <form>
+          <h2 class="text-center">Sign in</h2>		
+          <div class="text-center social-btn">
+            <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+          </div>
+          <div class="or-seperator" style="text-align: center;"><i></i>or</div>
+          <div class="form-group">
+            <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+              </div>
+          </div>        
+          <div class="form-group">
+              <button type="submit" class="btn btn-success btn-block login-btn">Sign in</button>
+          </div>
+          <div class="clearfix">
+              <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+              <a href="#" class="pull-right text-success">Forgot Password?</a>
+          </div>          
+      </form>
+    </div>
+    <div class="hint-text small mt-3" style="text-align: center;">Don't have an account? <a href="#" class="text-success">Register Now!</a></div>
+
+    
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

@@ -1,15 +1,6 @@
-const END_POINT = `https://thawing-harbor-36087.herokuapp.com`
+const END_POINT = `https://protected-crag-71554.herokuapp.com`
 
-$('#btn-add').on('click', () => {
-    $.ajax({
-        method:'GET',
-        url: `${END_POINT}/`,
-        success: (data) => {
-            $('#name').append(data.message)
-        }
-    })
-})
+const navBar = $('#nav-bar')
+const home = $('#home')
 
-$('#btn-clear').on('click', () => {
-    $('#name').empty()
-})
+home.hide()
