@@ -3,7 +3,7 @@ const { Task } = require(`../models`)
 class TaskController {
 
     static show (req, res, next) {
-        Task.findAll({where:{user_id:req.userData.id}})
+        Task.findAll({where:{user_id : req.userData.id}})
         .then(data => {
             res.status(200).json(data)
         })
@@ -13,6 +13,7 @@ class TaskController {
     }
 
     static add (req, res, next) {
+        console.log(`masuk add`)
         let newTask = {
             title: req.body.title,
             description: req.body.description,

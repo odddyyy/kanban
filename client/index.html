@@ -27,124 +27,220 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
-<body style="background-color: #666666;">
-	<!-- LOGIN PAGE -->
-	<div class="limiter" id="login-page">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<form class="login100-form validate-form" id="login-form">
-					
-					<span class="login100-form-title p-b-43">
-						Login to continue
-					</span>
-					
-					<span id="err-alert-login" style="color: red;"></span>
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" id="email">
-						<input class="input100" type="text" name="email" id="email-login">
-						<span class="focus-input100"></span>
-						<span class="label-input100">Email</span>
-					</div>
-					
-					
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="pass" id="pass-login">
-						<span class="focus-input100"></span>
-						<span class="label-input100">Password</span>
-					</div>
-
-					
-			
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" id="btn-login" type="submit">
-							Login
-						</button>
-					</div>
-
-					
-					
-					<div class="text-center p-t-46 p-b-20">
-						<span class="txt2">
-							or sign up using
+<body style="background-color: white;">
+	<div id="app">
+		<!-- LOGIN PAGE -->
+		<div class="limiter" id="login-page" v-if="!isLogin">
+			<div class="container-login100">
+				<div class="wrap-login100">
+					<form class="login100-form validate-form" @submit.prevent="postLogin">
+						
+						<span class="login100-form-title p-b-43">
+							Login to continue
 						</span>
-					</div>
-
-					
-
-					<div class="login100-form-social flex-c-m">
-						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-							<i class="fa fa-google" aria-hidden="true"></i>
-						</a>
-					</div>
-
-					<div class="container-login100-form-btn mt-5">
-						Dont Have Account ?
-					</div>
-					<div class="container-login100-form-btn mt-2">
-						<!-- <button class="login100-form-btn bg-success" data-toogle="modal" data-target="#exampleModal" id="btn-register">
-							Register
-						</button> -->
-						<button type="button" class="login100-form-btn btn bg-success" data-toggle="modal" data-target=".bd-example-modal-lg">
-							Register
-						</button>
-					</div>
-					
-					
-				</form>
-				<div class="login100-more" style="background-image: url('images/bg-01.jpeg');background-size: cover; background-size: 800px;">
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- MODAL REGISTER -->
-	<div class="modal fade bd-example-modal-lg" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-		  <div class="modal-content p-1" style="background-color:#bababa; text-align: center; width: 50%;">
-			<form class="form-horizontal" id="register-form">
-				<fieldset>
-				  <div id="legend">
-					<legend class="">Register</legend>
-				  </div>
-				  <div class="control-group">
-					<!-- Username -->
-					<label class="control-label"  for="username">Name</label>
-					<div class="controls">
-					  <input style="border: 0.5px solid black; border-radius: 3px; width: 300px;" type="text" id="username" name="username"  id="name-reg">
-					  </div>
-				  </div>
-			   
-				  <div class="control-group mt-3">
-					<!-- E-mail -->
-					<label class="control-label" for="email">E-mail</label>
-					<div class="controls">
-					  <input style="border: 1px solid black; border-radius: 3px; width: 300px;" type="text" id="email" name="email" class="input-xlarge" id="email-reg">
-					  </div>
-				  </div>
-			   
-				  <div class="control-group mt-3">
-					<!-- Password-->
-					<label class="control-label" for="password">Password</label>
-					<div class="controls">
-					  <input style="border: 1px solid black; border-radius: 3px; width: 300px;" type="password" id="password" name="password"  class="input-xlarge" id="pass-reg">
-					  </div>
-				  </div>
-			   
-				  <div class="control-group mt-3">
-					<!-- Button -->
-					<div class="controls">
-						<div class="text-center">
-							<button class="btn btn-primary" type="submit">
+						<p id="err-alert-login" style="text-align: center; color: red;"></p>
+						<span class="text-center" v-if="!error" style="color: red;">{{ error_msg }} </span>
+						<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" id="email">
+							<input class="input100" type="text" name="email" v-model="email_login" placeholder="Email">
+							<span class="focus-input100"></span>
+						</div>
+						
+						
+						<div class="wrap-input100 validate-input" data-validate="Password is required">
+							<input class="input100" type="password" name="pass" v-model="pass_login" placeholder="Password">
+							<span class="focus-input100"></span>
+						</div>
+	
+						
+	
+						<div class="container-login100-form-btn">
+							<button class="login100-form-btn" type="submit">
+								Login
+							</button>
+						</div>
+	
+						
+						
+						<div class="text-center p-t-46 p-b-20">
+							<span class="txt2">
+								or sign up using
+							</span>
+						</div>
+	
+						
+	
+						<div class="login100-form-social flex-c-m">
+							<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+								<i class="fa fa-google" aria-hidden="true"></i>
+							</a>
+						</div>
+	
+						<div class="container-login100-form-btn mt-5">
+							Dont Have Account ?
+						</div>
+						<div class="container-login100-form-btn mt-2">
+							<button type="button" class="login100-form-btn btn bg-success" data-toggle="modal" data-target=".bd-example-modal-lg">
 								Register
 							</button>
 						</div>
-					  </div>
-				  </div>
-				</fieldset>
-			  </form>
-		  </div>
+						
+						
+					</form>
+					<div class="login100-more" style="background-image: url('images/bg-01.jpeg');background-size: cover; background-size: 800px;">
+					</div>
+				</div>
+			</div>
 		</div>
-	  </div>
+	
+	
+		<!-- HOME PAGE -->
+		<div class="container" v-if="isLogin">
+			<div class="text-right">
+				<button class="btn btn-danger mt-5" @click="logout">LOGOUT</button>
+			</div>
+			<h1 style="text-align: center;">KangBang Board</h1>
+			<div class="row mt-3" style="border: 1px solid black;">
+				<!-- BACKLOG TABLE -->
+				<div class="col-3 p-2" style="text-align: center;">
+					<h3>Backlog</h3>
+					<div v-for="list in backlog" class="row-12 mt-2" style="border: 1px solid black;">
+						<div class="card">
+							<h6>Title</h6>
+							<p>{{ list.title }}</p>
+							<h6>Description</h6>
+							<p>{{ list.description }}</p>
+						</div>
+						<div class="col">
+							<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">--></button>
+						</div>
+					</div>
+				</div>
+	
+	
+				<!-- ON PROCESS TABLE -->
+				<div class="col-3 p-2" style="text-align: center;">
+					<h3>On Process</h3>
+					<div v-for="list in onProcess" class="row-12 mt-2" style="border: 1px solid black;">
+						<div class="card">
+							<h6>Title</h6>
+							<p>{{ list.title }}</p>
+							<h6>Description</h6>
+							<p>{{ list.description }}</p>
+						</div>
+						<div class="col">
+							<button class="btn btn-danger mb-1 mt-1" @click.prevent="changeStatsBack(list.id, list.status)"><--</button>
+							<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">--></button>
+						</div>
+					</div>	
+				</div>
+	
+				<!-- ON REVIEWED TABLE -->
+				<div class="col-3 p-2" style="text-align: center;">
+					<h3>On Reviewed</h3>
+					<div v-for="list in onReviewed" class="row-12 mt-2" style="border: 1px solid black;">
+						<div class="card">
+							<h6>Title</h6>
+							<p>{{ list.title }}</p>
+							<h6>Description</h6>
+							<p>{{ list.description }}</p>
+						</div>
+						<div class="col">
+							<button class="btn btn-danger mb-1 mt-1" @click.prevent="changeStatsBack(list.id, list.status)"><--</button>
+							<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">--></button>
+						</div>
+					</div>
+				</div>
+	
+				<!-- COMPLETED TABLE -->
+				<div class="col-3 p-2" style="text-align: center;">
+					<h3>Completed</h3>
+					<div v-for="list in completed" class="row-12 mt-2" style="border: 1px solid black;">
+						<div class="card">
+							<h6>Title</h6>
+							<p>{{ list.title }}</p>
+							<h6>Description</h6>
+							<p>{{ list.description }}</p>
+						</div>
+						<div class="col">
+							<button class="btn btn-danger mb-1 mt-1" @click.prevent="changeStatsBack(list.id, list.status)"><--</button>
+							<button class="btn btn-danger mb-1 mt-1" type="button" @click.prevent="deleteTask(list.id)">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-success btn-sm mt-2" @click="addForm">Add New Task</button>
+	
+	
+		</div>
+		
+		<!-- MODAL REGISTER -->
+		<div class="modal fade bd-example-modal-lg" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+			  <div class="modal-content p-1" style="background-color:#bababa; text-align: center; width: 50%;">
+				<form class="form-horizontal" @submit.prevent="register">
+					<fieldset>
+					  <div id="legend">
+						<legend class="">Register</legend>
+					  </div>
+					  <div class="control-group">
+						<!-- Username -->
+						<label class="control-label"  for="username">Name</label>
+						<div class="controls">
+						  <input style="border: 0.5px solid black; border-radius: 3px; width: 300px;" type="text" id="username" name="username"  v-model="name_reg">
+						  </div>
+					  </div>
+				   
+					  <div class="control-group mt-3">
+						<!-- E-mail -->
+						<label class="control-label" for="email">E-mail</label>
+						<div class="controls">
+						  <input style="border: 1px solid black; border-radius: 3px; width: 300px;" type="text" id="email" name="email" class="input-xlarge" v-model ="email_reg">
+						  </div>
+					  </div>
+				   
+					  <div class="control-group mt-3">
+						<!-- Password-->
+						<label class="control-label" for="password">Password</label>
+						<div class="controls">
+						  <input style="border: 1px solid black; border-radius: 3px; width: 300px;" type="password" id="password" name="password"  class="input-xlarge" v-model="pass_reg">
+						  </div>
+					  </div>
+				   
+					  <div class="control-group mt-3">
+						<!-- Button -->
+						<div class="controls">
+							<div class="text-center">
+								<button class="btn btn-primary" type="submit">
+									Register
+								</button>
+							</div>
+						  </div>
+					  </div>
+					</fieldset>
+				  </form>
+			  </div>
+			</div>
+		  </div>
+
+		  <div id="addnew" v-if="isAdd" class="mt-5">
+			<div class="container">
+				<h3 style="text-align: center;">Add new Task</h3>
+				<form @submit.prevent="addNewTask">
+					<div class="form-group">
+					  <label for="exampleFormControlInput1">Title</label>
+					  <input type="text" class="form-control" id="exampleFormControlInput1" v-model="add_title">
+					</div>
+					<div class="form-group">
+					  <label for="exampleFormControlTextarea1">Description</label>
+					  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="add_desc"></textarea>
+					</div>
+					<button class="btn btn-primary" type="submit">add</button>
+					<button class="btn btn-danger" type="reset">clear</button>
+				</form>
+			</div>
+
+		  </div>
+	</div>
 	
 	
 	
@@ -152,6 +248,7 @@
 	
 	
 <!--===============================================================================================-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
@@ -166,6 +263,7 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="js/main.js"></script>
 	<script src="script.js"></script>
 

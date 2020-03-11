@@ -5,7 +5,7 @@ const { createToken } = require(`../helpers/token`)
 class UserController {
 
     static register (req, res, next) {
-
+        console.log(req.body.email)
         User.findOne({where:{email:req.body.email}})
         .then(data => {
             if (data) {
