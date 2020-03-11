@@ -1,10 +1,10 @@
-const END_POINT = `https://protected-crag-71554.herokuapp.com`
+const END_POINT = `https://protected-crag-71554.herokuapp.com/`
 
 const loginPassword = $('#pass-login')
 const loginEmail = $('#email-login')
 const email = $('#email')
 var token = localStorage.getItem('access_token')
-console.log(token)
+console.log(token, `<<<<<< token`)
 
 $(document).ready(() => {
     if (token) {
