@@ -193,7 +193,6 @@ new Vue ({
             } else if (status == `On Process`) {
                 back = `Backlog`
             }
-            console.log(back)
             axios({
                 method:'PUT',
                 url:`http://localhost:3000/tasks/edit/${id}`,
