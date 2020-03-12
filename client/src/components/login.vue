@@ -1,5 +1,6 @@
 <template>
-    <div v-if="!isLogin">
+<div>
+    <div v-if="!isLogin && !register">
         <div class="sidenav">
          <div class="login-main-text">
              <h1 class="mt-5 text-center">Welcome To Kanban</h1>
@@ -30,6 +31,40 @@
          </div>
       </div>
     </div>
+    <!-- REGISTER -->
+    <div class="container mt-5" v-if="!isLogin && register">
+      <div class="col-md-6 mx-auto text-center">
+         <div class="header-title">
+            <h2 class="wv-heading--subtitle">
+               Register Form
+            </h2>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-4 mx-auto">
+            <div class="myform form ">
+               <form @submit.prevent="postRegister()">
+                  <div class="form-group">
+                     <input type="text" name="name"  class="form-control my-input" id="name" placeholder="Name" v-model="name_reg">
+                  </div>
+                  <div class="form-group">
+                     <input type="email" name="email"  class="form-control my-input" id="email" placeholder="Email" v-model="email_reg">
+                  </div>
+                  <div class="form-group">
+                     <input type="password" class="form-control my-input" placeholder="Password" v-model="pass_reg">
+                  </div>
+                  <div class="text-center ">
+                     <button type="submit" class=" btn btn-primary">Create Your Free Account</button>
+                  </div>
+                  <div class="text-center mt-1">
+                     <button type="button" class="btn btn-secondary" @click="doLog()">Back to Login</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 </template>
 <script>
 import axios from 'axios'
@@ -40,7 +75,11 @@ export default ({
             email_login: null,
             pass_login: null,
             error: false,
-            error_msg: null
+            error_msg: null,
+            register: false,
+            pass_reg: null,
+            name_reg: null,
+            email_reg: null
         }
     },
     methods: {
@@ -63,7 +102,27 @@ export default ({
             })
         },
         doRegister() {
-            this.$emit('isRegister')
+            this.register = true
+        },
+        doLog() {
+            this.register = false
+        },
+        postRegister() {
+            axios.post(`https://protected-crag-71554.herokuapp.com/users/register`, {
+                
+                    name: this.name_reg,
+                    email: this.email_reg,
+                    password: this.pass_reg
+                
+            })
+            .then(data => {
+                let token = data.data.access_token
+                localStorage.setItem('access_token', token)
+                this.$emit('changeIsLogin', { value:true })
+            })
+            .catch(err => {
+
+            })
         }
     }
 })
