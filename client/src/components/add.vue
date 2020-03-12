@@ -1,6 +1,6 @@
 <template>
     <div id="addnew" v-if="isAdd" class="mt-5">
-			<div class="container">
+			<div class="container border border-dark rounded py-3">
 				<h3 style="text-align: center;">Add new Task</h3>
                 <span class="text-center" v-if="error" style="color: red;">{{ error_msg }} </span>
 				<form @submit.prevent="addNewTask">

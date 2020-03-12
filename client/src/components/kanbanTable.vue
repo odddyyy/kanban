@@ -1,9 +1,11 @@
 <template>
     <div class="container" v-if="isLogin">
             <div class="text-right mt-5">
-			    <button class="btn btn-danger" v-if="isLogin" @click="logout()">Logout</button>
+			    <button class="btn btn-danger btn-lg" v-if="isLogin" @click="logout()">Logout</button>
             </div>
-			<h1 style="text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 100px;">KangBang Board</h1>
+			<h1 style="text-align: center; font-family:monospace; font-size: 100px;">KhanBan Board</h1>
+            <button class="btn btn-success btn-sm mt-2" @click="addForm">Add New Task</button>
+            <Add :isAdd="isAdd" @changeIsAdd="changeAdd"></Add>
 			<div class="row mt-3 p-3" style="border: 1px solid black; background-image: url('/images/boardbackground.jpg'); background-repeat: no-repeat; background-size: cover; max-height:100vh;">
 				<!-- BACKLOG TABLE -->
 				<div class="col-3 p-3" style="text-align: center;">
@@ -78,8 +80,8 @@
 				</div>
 			
 			</div>
-			<button class="btn btn-success btn-sm mt-2" @click="addForm">Add New Task</button>
-            <Add :isAdd="isAdd" @changeIsAdd="changeAdd"></Add>
+			
+            
 	</div>
 </template>
 <script>
@@ -100,7 +102,7 @@ export default {
             onProcess: null,
             onReviewed: null,
             completed: null,
-            isAdd: null
+            isAdd: false
         }
     },
     methods: {

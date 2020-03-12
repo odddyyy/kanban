@@ -1,7 +1,8 @@
 <template>
     <div>
-    <KanbanTable :isLogin="isLogin" @changeIsLogin="checkLogin"></KanbanTable>
-    <Login :isLogin="isLogin" @changeIsLogin="checkLogin"></Login>
+        <KanbanTable :isLogin="isLogin" @changeIsLogin="checkLogin"></KanbanTable>
+        <Login :isLogin="isLogin" @changeIsLogin="checkLogin"></Login>
+        <!-- <register :isRegister="isRegister"></register> -->
     </div>
 </template>
 
@@ -9,17 +10,22 @@
 import axios from "axios";
 import Login from './components/login'
 import KanbanTable from './components/kanbanTable'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import register from './components/register'
 
 export default {
     components: {
         Login,
         KanbanTable
+        // register
     },
   data() {
     return {
       
       isLogin: null,
-      isAdd: false
+      isAdd: false,
+      isRegister: false
     };
   
 
@@ -38,6 +44,10 @@ export default {
 
       changeLogin() {
           this.checkLogin()
+      },
+
+      checkRegister() {
+
       }
   }
 

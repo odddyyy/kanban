@@ -2,8 +2,10 @@
     <div v-if="!isLogin">
         <div class="sidenav">
          <div class="login-main-text">
-            <h2>Application<br> Login Page</h2>
-            <p>Login or register from here to access.</p>
+             <h1 class="mt-5 text-center">Welcome To Kanban</h1>
+             <h5 class="text-center">Please log in to continue</h5>
+             <h5 class="text-center">Or</h5>
+             <h5 class="text-center">Register to use the app</h5>
          </div>
       </div>
       <div class="main">
@@ -21,8 +23,8 @@
                      <input type="password" class="form-control" v-model="pass_login">
                      
                   </div>
-                  <button type="submit" class="btn btn-black">Login</button>
-                  <button type="submit" class="btn btn-secondary">Register</button>
+                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="button" class="btn btn-secondary" @click="doRegister()">Register</button>
                </form>
             </div>
          </div>
@@ -40,9 +42,6 @@ export default ({
             error: false,
             error_msg: null
         }
-    },
-    created() {
-
     },
     methods: {
         postLogin() {
@@ -62,6 +61,9 @@ export default ({
                 this.error = true
                 
             })
+        },
+        doRegister() {
+            this.$emit('isRegister')
         }
     }
 })
