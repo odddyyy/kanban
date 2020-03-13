@@ -25,9 +25,12 @@
                      
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
-                  <button type="button" class="btn btn-secondary" @click="doRegister()">Register</button>
-                  <div id="google-signin-button"></div>
+                  <button type="button" class="btn btn-secondary" @click.prevent="doRegister()">Register</button>
                </form>
+               <div class="text-left mt-3">
+                  <button type="button" class="btn btn-light" @click.prevent="gSign()">Sign with Google</button>
+
+               </div>
             </div>
          </div>
       </div>
@@ -56,7 +59,7 @@
                      <input type="password" class="form-control my-input" placeholder="Password" v-model="pass_reg">
                   </div>
                   <div class="text-center ">
-                     <button type="submit" class=" btn btn-success">Create Your Free Account</button>
+                     <button type="submit" class=" btn btn-success">Register</button>
                   </div>
                   <div class="text-center mt-1">
                      <button type="button" class="btn btn-secondary" @click="doLog()">Back to Login</button>
@@ -84,13 +87,11 @@ export default ({
             email_reg: ``
         }
     },
-    created(){
-       this.empty()
-    },
     mounted() {
        gapi.signin2.render('google-signin-button', {
        onsuccess: this.onSignIn
        })
+       
     },
     methods: {
         postLogin() {
@@ -150,19 +151,32 @@ export default ({
             this.email_reg = ``
         },
 
-        onSignIn(user) {
-           var id_token = user.getAuthResponse().id_token
-           axios.post(`http://localhost:3000/users/googleSign`,{
+        onSignIn(par_token) {
+           axios.post(`https://protected-crag-71554.herokuapp.com/users/googleSign`,{
               data: {
-                 access_token: id_token
+                 access_token: par_token
               }
            })
            .then(data => {
-              console.log(data)
+              let token = data.data.access_token
+               localStorage.setItem('access_token', token)
+               this.$emit('successGSign', { value:true })
            })
            .catch(err => {
               console.log(err)
            })
+        },
+
+        gSign() {
+           this.$gAuth.signIn()
+            .then(GoogleUser => {
+            let token = GoogleUser.uc.id_token
+            this.isSignIn = this.$gAuth.isAuthorized
+            this.onSignIn(token)
+            })
+            .catch(error  => {
+
+            })
         }
     }
 })

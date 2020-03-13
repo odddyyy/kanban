@@ -1,7 +1,7 @@
 <template>
     <div>
         <KanbanTable v-if="isLogin" :isLogin="isLogin" @changeIsLogin="checkLogin"></KanbanTable>
-        <Login :isLogin="isLogin" @changeIsLogin="checkLogin"></Login>
+        <Login :isLogin="isLogin" @changeIsLogin="checkLogin" @successGSign="checkLogin"></Login>
         <!-- <register :isRegister="isRegister"></register> -->
     </div>
 </template>
@@ -44,10 +44,6 @@ export default {
 
       changeLogin() {
           this.checkLogin()
-      },
-
-      checkRegister() {
-
       }
   }
 

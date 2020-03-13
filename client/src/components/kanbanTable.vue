@@ -232,6 +232,7 @@ export default {
         logout() {
             localStorage.removeItem('access_token')
             // this.reset()
+            this.signOut()
             this.$emit("changeIsLogin", { value:false })
         },
 
@@ -255,6 +256,12 @@ export default {
             this.completed= null,
             this.isEdit= false,
             this.editID= null
+        },
+        signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            console.log('User signed out.');
+            });
         }
     }
 }
