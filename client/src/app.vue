@@ -1,6 +1,6 @@
 <template>
     <div>
-        <KanbanTable :isLogin="isLogin" @changeIsLogin="checkLogin"></KanbanTable>
+        <KanbanTable v-if="isLogin" :isLogin="isLogin" @changeIsLogin="checkLogin"></KanbanTable>
         <Login :isLogin="isLogin" @changeIsLogin="checkLogin"></Login>
         <!-- <register :isRegister="isRegister"></register> -->
     </div>

@@ -1,6 +1,8 @@
 const { User } = require(`../models`)
 const { deHash } = require(`../helpers/bcrypt`)
 const { createToken } = require(`../helpers/token`)
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.G_CLIENT_ID);
 
 class UserController {
 
@@ -71,6 +73,56 @@ class UserController {
                     msg:`Invalid Email / Password`
                 })
             }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static gSign (req, res, next) {
+        let gToken = req.body.data.access_token
+        let payload = null
+        client.verifyIdToken({
+            idToken:gToken,
+            audience: process.env.G_CLIENT_ID
+        })
+        .then(data => {
+            payload = data.getPayload()
+            return User.findOne({where:{email:payload.email}})
+        })
+        .then(data => {
+            let createUser = {
+                name: payload.name,
+                email: payload.email,
+                password: `hanyatuhandandiayangtau`
+            }
+
+            if (data == null) {
+                return User.create(createUser)
+            } else {
+                let gotToken = createToken({
+                    id: data.id,
+                    name: payload.name,
+                    email: payload.email
+                })
+
+                req.headers = gotToken,
+                req.userData = {
+                    id: createUser.id,
+                    name: createUser.name,
+                    email: createUser.email
+                }
+                res.status(200).json({access_token : gotToken})
+            }
+        })
+        .then(data => {
+            let user = {
+                id: data.id,
+                name: data.name,
+                email: data.email
+            }
+            let token = createToken(user)
+            res.status(200).json({access_token:token})
         })
         .catch(err => {
             next(err)

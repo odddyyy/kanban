@@ -10728,6 +10728,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   props: ['isLogin'],
   data: function data() {
@@ -10744,6 +10745,11 @@ var _default = {
   },
   created: function created() {
     this.empty();
+  },
+  mounted: function mounted() {
+    gapi.signin2.render('google-signin-button', {
+      onsuccess: this.onSignIn
+    });
   },
   methods: {
     postLogin: function postLogin() {
@@ -10797,6 +10803,19 @@ var _default = {
     },
     empty: function empty() {
       this.email_login = "", this.pass_login = "", this.error = false, this.error_msg = "", this.register = false, this.pass_reg = "", this.name_reg = "", this.email_reg = "";
+    },
+    onSignIn: function onSignIn(user) {
+      var id_token = user.getAuthResponse().id_token;
+
+      _axios.default.post("http://localhost:3000/users/googleSign", {
+        data: {
+          access_token: id_token
+        }
+      }).then(function (data) {
+        console.log(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
     }
   }
 };
@@ -10916,7 +10935,9 @@ exports.default = _default;
                         }
                       },
                       [_vm._v("Register")]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "google-signin-button" } })
                   ]
                 )
               ])
@@ -11388,7 +11409,6 @@ var _default = {
     }
   },
   created: function created() {
-    console.log(this.editID);
     this.getForm(this.editID);
     this.id = this.editID;
   },
@@ -11680,6 +11700,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   props: ['isLogin'],
   components: {
@@ -11687,6 +11716,7 @@ var _default = {
     Edit: _edit.default
   },
   created: function created() {
+    console.log("masuk created");
     this.getData();
   },
   data: function data() {
@@ -11816,22 +11846,32 @@ var _default = {
       });
     },
     logout: function logout() {
-      localStorage.removeItem('access_token');
+      localStorage.removeItem('access_token'); // this.reset()
+
       this.$emit("changeIsLogin", {
         value: false
       });
     },
     editForm: function editForm(id) {
-      this.reset();
+      window.scrollTo({
+        top: 800,
+        left: 100,
+        behavior: 'smooth'
+      });
       this.isEdit = true;
       this.editID = id;
     },
     edited: function edited() {
+      window.scrollTo({
+        top: 50,
+        left: 100,
+        behavior: 'smooth'
+      });
       this.isEdit = false, this.editID = null;
       this.getData();
     },
     reset: function reset() {
-      this.editID = null;
+      this.listTask = null, this.backlog = null, this.onProcess = null, this.onReviewed = null, this.completed = null, this.isEdit = false, this.editID = null;
     }
   }
 };
@@ -11882,15 +11922,6 @@ exports.default = _default;
             [_vm._v("KhanBan Board")]
           ),
           _vm._v(" "),
-          !_vm.isEdit
-            ? _c("Add", { on: { changeIsAdd: _vm.changeAdd } })
-            : _vm.isEdit
-            ? _c("Edit", {
-                attrs: { editID: _vm.editID },
-                on: { edited: _vm.edited, cancel: _vm.edited }
-              })
-            : _vm._e(),
-          _vm._v(" "),
           _c(
             "div",
             {
@@ -11899,7 +11930,9 @@ exports.default = _default;
                 "background-image":
                   "url('/boardbackground.d6f45970.jpg')",
                 "background-repeat": "no-repeat",
-                "background-size": "cover"
+                "background-size": "cover",
+                height: "890px",
+                width: "1200px"
               }
             },
             [
@@ -12254,13 +12287,39 @@ exports.default = _default;
                 2
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          !_vm.isEdit
+            ? _c("Add", { on: { changeIsAdd: _vm.changeAdd } })
+            : _vm.isEdit
+            ? _c("Edit", {
+                attrs: { editID: _vm.editID },
+                on: { edited: _vm.edited, cancel: _vm.edited }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._m(0)
         ],
         1
       )
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "footer",
+      { staticClass: "page-footer font-small blue text-white" },
+      [
+        _c("div", { staticClass: "footer-copyright text-center py-3" }, [
+          _vm._v("© 2020 Copyright: Kanban Hacktiv8\n\t\t")
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
           return {
@@ -12375,10 +12434,12 @@ exports.default = _default;
   return _c(
     "div",
     [
-      _c("KanbanTable", {
-        attrs: { isLogin: _vm.isLogin },
-        on: { changeIsLogin: _vm.checkLogin }
-      }),
+      _vm.isLogin
+        ? _c("KanbanTable", {
+            attrs: { isLogin: _vm.isLogin },
+            on: { changeIsLogin: _vm.checkLogin }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c("Login", {
         attrs: { isLogin: _vm.isLogin },

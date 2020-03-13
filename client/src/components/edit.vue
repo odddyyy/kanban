@@ -36,7 +36,6 @@ export default {
     },
 
     created() {
-        console.log(this.editID)
         this.getForm(this.editID)
         this.id = this.editID
     },

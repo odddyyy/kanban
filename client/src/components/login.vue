@@ -26,6 +26,7 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                   <button type="button" class="btn btn-secondary" @click="doRegister()">Register</button>
+                  <div id="google-signin-button"></div>
                </form>
             </div>
          </div>
@@ -86,6 +87,11 @@ export default ({
     created(){
        this.empty()
     },
+    mounted() {
+       gapi.signin2.render('google-signin-button', {
+       onsuccess: this.onSignIn
+       })
+    },
     methods: {
         postLogin() {
             axios.post(`https://protected-crag-71554.herokuapp.com/users/login`, {
@@ -142,6 +148,21 @@ export default ({
             this.pass_reg = ``,
             this.name_reg = ``,
             this.email_reg = ``
+        },
+
+        onSignIn(user) {
+           var id_token = user.getAuthResponse().id_token
+           axios.post(`http://localhost:3000/users/googleSign`,{
+              data: {
+                 access_token: id_token
+              }
+           })
+           .then(data => {
+              console.log(data)
+           })
+           .catch(err => {
+              console.log(err)
+           })
         }
     }
 })

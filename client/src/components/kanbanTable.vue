@@ -4,10 +4,9 @@
 			    <button class="btn btn-danger btn-lg" v-if="isLogin" @click="logout()">Logout</button>
             </div>
 			<h1 style="text-align: center; font-family:monospace; font-size: 100px;">KhanBan Board</h1>
-            <Add v-if="!isEdit" @changeIsAdd="changeAdd"></Add>
-            <Edit v-else-if="isEdit" :editID="editID" @edited="edited" @cancel="edited"></Edit>
+            
             <!-- <button class="btn btn-primary mt-3" @click="">Add new Task</button> -->
-			<div class="row mt-3 p-3" style="background-image: url('/images/boardbackground.jpg'); background-repeat: no-repeat; background-size: cover;">
+			<div class="row mt-3 p-3" style="background-image: url('/images/boardbackground.jpg'); background-repeat: no-repeat; background-size: cover; height:890px; width:1200px;">
 				<!-- BACKLOG TABLE -->
 				<div class="col-3 p-3" style="text-align: center;">
 					<h3 style="font-family: fantasy; color: white;">BACKLOG</h3>
@@ -82,10 +81,20 @@
 						</div>
 					</div>
 				</div>
+
+                
 			
 			</div>
-			
-            
+			<Add v-if="!isEdit" @changeIsAdd="changeAdd"></Add>
+            <Edit v-else-if="isEdit" :editID="editID" @edited="edited" @cancel="edited"></Edit>
+            <footer class="page-footer font-small blue text-white">
+
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3">© 2020 Copyright: Kanban Hacktiv8
+		</div>
+		<!-- Copyright -->
+	  
+	</footer>
 	</div>
 </template>
 <script>
@@ -99,6 +108,7 @@ export default {
         Edit
     },
     created() {
+        console.log(`masuk created`)
         this.getData()
     },
     data() {
@@ -221,22 +231,30 @@ export default {
 
         logout() {
             localStorage.removeItem('access_token')
+            // this.reset()
             this.$emit("changeIsLogin", { value:false })
         },
 
         editForm(id) {
-            this.reset()
+            window.scrollTo({ top: 800, left: 100, behavior: 'smooth' })
             this.isEdit = true
             this.editID = id
         },
         
         edited() {
+            window.scrollTo({ top: 50, left: 100, behavior: 'smooth' })
             this.isEdit = false,
             this.editID = null
             this.getData()
         },
         reset() {
-            this.editID = null
+            this.listTask= null,
+            this.backlog= null,
+            this.onProcess= null,
+            this.onReviewed= null,
+            this.completed= null,
+            this.isEdit= false,
+            this.editID= null
         }
     }
 }
