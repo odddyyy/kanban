@@ -1,28 +1,27 @@
 <template>
-    <div id="addnew" v-if="isAdd" class="mt-5">
-			<div class="container border border-dark rounded py-3">
-				<h3 style="text-align: center;">Add new Task</h3>
-                <span class="text-center" v-if="error" style="color: red;">{{ error_msg }} </span>
-				<form @submit.prevent="addNewTask">
-					<div class="form-group">
-					  <label for="exampleFormControlInput1">Title</label>
-					  <input type="text" class="form-control" id="exampleFormControlInput1" v-model="add_title">
-					</div>
-					<div class="form-group">
-					  <label for="exampleFormControlTextarea1">Description</label>
-					  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="add_desc"></textarea>
-					</div>
-					<button class="btn btn-primary" type="submit">add</button>
-					<button class="btn btn-danger" type="reset">clear</button>
-				</form>
-			</div>
-
-		  </div>
+    <div id="addnew" class="mt-5 bg-white">
+        <div class="container border border-dark rounded py-3">
+            <h3 style="text-align: center;">Add new Task</h3>
+            <span class="text-center" v-if="error" style="color: red;">{{ error_msg }} </span>
+            <form @submit.prevent="addNewTask">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Title</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="add_title">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="add_desc"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">add</button>
+                <button class="btn btn-danger" type="reset">clear</button>
+            </form>
+        </div>
+    </div>
 </template>
 <script>
 import axios from 'axios'
 export default {
-    props:['isAdd'],
+    props:['isAdd', 'isEdit'],
     data() {
         return {
             add_title: ``,

@@ -38,6 +38,7 @@
             <h2 class="wv-heading--subtitle">
                Register Form
             </h2>
+            <span class="text-center" v-if="error" style="color: red;">{{ error_msg }} </span>
          </div>
       </div>
       <div class="row">
@@ -54,7 +55,7 @@
                      <input type="password" class="form-control my-input" placeholder="Password" v-model="pass_reg">
                   </div>
                   <div class="text-center ">
-                     <button type="submit" class=" btn btn-primary">Create Your Free Account</button>
+                     <button type="submit" class=" btn btn-success">Create Your Free Account</button>
                   </div>
                   <div class="text-center mt-1">
                      <button type="button" class="btn btn-secondary" @click="doLog()">Back to Login</button>
@@ -72,15 +73,18 @@ export default ({
     props:['isLogin'],
     data() {
         return {
-            email_login: null,
-            pass_login: null,
+            email_login: ``,
+            pass_login: ``,
             error: false,
-            error_msg: null,
+            error_msg: ``,
             register: false,
-            pass_reg: null,
-            name_reg: null,
-            email_reg: null
+            pass_reg: ``,
+            name_reg: ``,
+            email_reg: ``
         }
+    },
+    created(){
+       this.empty()
     },
     methods: {
         postLogin() {
@@ -98,13 +102,14 @@ export default ({
             .catch(err => {
                 this.error_msg = err.response.data
                 this.error = true
-                
             })
         },
         doRegister() {
+            this.empty()
             this.register = true
         },
         doLog() {
+           this.empty()
             this.register = false
         },
         postRegister() {
@@ -121,8 +126,22 @@ export default ({
                 this.$emit('changeIsLogin', { value:true })
             })
             .catch(err => {
-
+               err.response.data.forEach(i => {
+                  this.error_msg += `${i}\n`
+               })
+               this.error = true
             })
+        },
+
+        empty() {
+            this.email_login = ``,
+            this.pass_login = ``,
+            this.error = false,
+            this.error_msg = ``,
+            this.register = false,
+            this.pass_reg = ``,
+            this.name_reg = ``,
+            this.email_reg = ``
         }
     }
 })

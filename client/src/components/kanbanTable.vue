@@ -4,9 +4,10 @@
 			    <button class="btn btn-danger btn-lg" v-if="isLogin" @click="logout()">Logout</button>
             </div>
 			<h1 style="text-align: center; font-family:monospace; font-size: 100px;">KhanBan Board</h1>
-            <button class="btn btn-success btn-sm mt-2" @click="addForm">Add New Task</button>
-            <Add :isAdd="isAdd" @changeIsAdd="changeAdd"></Add>
-			<div class="row mt-3 p-3" style="border: 1px solid black; background-image: url('/images/boardbackground.jpg'); background-repeat: no-repeat; background-size: cover; max-height:100vh;">
+            <Add v-if="!isEdit" @changeIsAdd="changeAdd"></Add>
+            <Edit v-else-if="isEdit" :editID="editID" @edited="edited" @cancel="edited"></Edit>
+            <!-- <button class="btn btn-primary mt-3" @click="">Add new Task</button> -->
+			<div class="row mt-3 p-3" style="background-image: url('/images/boardbackground.jpg'); background-repeat: no-repeat; background-size: cover;">
 				<!-- BACKLOG TABLE -->
 				<div class="col-3 p-3" style="text-align: center;">
 					<h3 style="font-family: fantasy; color: white;">BACKLOG</h3>
@@ -18,6 +19,7 @@
 								<p>{{ list.description }}</p>
 							</div>
 							<div class="card-text mt-1">
+								<button class="btn btn-warning mb-1 mt-1" @click.prevent="editForm(list.id)">edit</button>
 								<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">></button>
 							</div>
 						</div>
@@ -37,6 +39,7 @@
 							</div>
 							<div class="card-text mt-1">
 								<button class="btn btn-danger mb-1 mt-1" @click.prevent="changeStatsBack(list.id, list.status)"><</button>
+                                <button class="btn btn-warning mb-1 mt-1" @click.prevent="editForm(list.id)">edit</button>
 								<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">></button>
 							</div>
 						</div>
@@ -55,6 +58,7 @@
 							</div>
 							<div class="card-text mt-1">
 								<button class="btn btn-danger mb-1 mt-1" @click.prevent="changeStatsBack(list.id, list.status)"><</button>
+                                <button class="btn btn-warning mb-1 mt-1" @click.prevent="editForm(list.id)">edit</button>
 								<button class="btn btn-success mb-1 mt-1" @click.prevent="changeStatsNext(list.id, list.status)">></button>
 							</div>
 						</div>
@@ -87,10 +91,12 @@
 <script>
 import axios from 'axios'
 import Add from './add'
+import Edit from './edit'
 export default {
     props:['isLogin'],
     components: {
-        Add
+        Add,
+        Edit
     },
     created() {
         this.getData()
@@ -102,7 +108,8 @@ export default {
             onProcess: null,
             onReviewed: null,
             completed: null,
-            isAdd: false
+            isEdit: false,
+            editID: null
         }
     },
     methods: {
@@ -215,6 +222,21 @@ export default {
         logout() {
             localStorage.removeItem('access_token')
             this.$emit("changeIsLogin", { value:false })
+        },
+
+        editForm(id) {
+            this.reset()
+            this.isEdit = true
+            this.editID = id
+        },
+        
+        edited() {
+            this.isEdit = false,
+            this.editID = null
+            this.getData()
+        },
+        reset() {
+            this.editID = null
         }
     }
 }
